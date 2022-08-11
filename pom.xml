@@ -34,6 +34,26 @@
 	  <artifactId>spring-webmvc</artifactId>
       <version>5.0.2.RELEASE</version>
     </dependency>
+    <!-- Connection Pool -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jdbc</artifactId>
+      <version>9.0.65</version>
+    </dependency>
+    <!-- JDBC -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>5.0.2.RELEASE</version>
+    </dependency>
+    <!-- DB -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.4.1</version>
+    </dependency>
+    <!-- SLF4J, logback -->
+    <!-- servlet -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
