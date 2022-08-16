@@ -53,4 +53,8 @@ public class Member {
 		this.password= newPw;
 	}
 	
+	public boolean matchPassword(String password) {
+		return this.password.equals(password);
+	}
+	
 }

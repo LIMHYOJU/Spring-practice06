@@ -1,13 +1,18 @@
-package springTest;
+package service;
 
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import dao.MemberDao;
+import springTest.DuplicateMemberException;
+import springTest.Member;
+import springTest.RegisterRequest;
 
 @Component
+@Service
 public class MemberRegisterService {
 	@Autowired
 	private MemberDao memberDao;

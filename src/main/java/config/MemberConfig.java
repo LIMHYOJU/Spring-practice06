@@ -6,13 +6,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import dao.MemberDao;
-import springTest.ChangePasswordService;
-import springTest.MemberRegisterService;
+import service.ChangePasswordService;
+import service.MemberRegisterService;
 
-@ComponentScan(basePackages = {"dao","springTest"})
+@ComponentScan(basePackages = {"dao","springTest","service"})
 @Configuration
+@EnableTransactionManagement
 public class MemberConfig {
 	
 	@Bean(destroyMethod = "close")

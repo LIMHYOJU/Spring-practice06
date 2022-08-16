@@ -1,12 +1,16 @@
-package springTest;
+package service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dao.MemberDao;
+import springTest.Member;
+import springTest.MemberNotFoundException;
 
 @ComponentScan
+@Service
 public class ChangePasswordService {
 	@Autowired
 	private MemberDao memberDao;
