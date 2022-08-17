@@ -27,19 +27,14 @@ public class ChangePwdController {
 	}
 
 	@PostMapping
-	public String submit(
-			@ModelAttribute("command") ChangePwdRequest pwdReq,
-			Errors errors,
-			HttpSession session) {
+	public String submit(@ModelAttribute("command") ChangePwdRequest pwdReq, Errors errors, HttpSession session) {
 		new ChangePwdCommandValidator().validate(pwdReq, errors);
 		if (errors.hasErrors()) {
 			return "edit/changePwdForm";
 		}
 		AuthInfo authInfo = (AuthInfo) session.getAttribute("authInfo");
 		try {
-			changePasswordService.changePassword(
-					authInfo.getEmail(),
-					pwdReq.getCurrentPassword(),
+			changePasswordService.changePassword(authInfo.getEmail(), pwdReq.getCurrentPassword(),
 					pwdReq.getNewPassword());
 			return "edit/changedPwd";
 		} catch (WrongIdPasswordException e) {

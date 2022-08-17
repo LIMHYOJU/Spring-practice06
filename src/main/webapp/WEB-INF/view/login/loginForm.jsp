@@ -23,9 +23,9 @@
         </label>
     </p>
     <p>
-<%--         <label><spring:message code="rememberEmail" />:
+        <label><spring:message code="rememberEmail" />:
         <form:checkbox path="rememberEmail"/> 
-        </label> --%>
+        </label>
     </p>
     <input type="submit" value="<spring:message code="login.btn" />">
     </form:form>

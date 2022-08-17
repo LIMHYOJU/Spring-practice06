@@ -8,10 +8,6 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import dao.MemberDao;
-import service.ChangePasswordService;
-import service.MemberRegisterService;
-
 @ComponentScan(basePackages = {"dao","springTest","service"})
 @Configuration
 @EnableTransactionManagement

@@ -21,7 +21,7 @@ public class ChangePasswordService {
 		if (member == null)
 			throw new MemberNotFoundException();
 
-		member.changePassword(oldPwd, newPwd);
+		member.changePassword(newPwd, oldPwd);
 
 		memberDao.update(member);
 	}

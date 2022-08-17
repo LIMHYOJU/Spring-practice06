@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -20,7 +21,19 @@ import springTest.Member;
 @Component
 public class MemberDao {
 	private JdbcTemplate jdbcTemplate;
-	
+	private RowMapper<Member> memRowMapper  = new RowMapper<Member>() {
+		@Override
+		public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+			// TODO Auto-generated method stub
+			Member member = new Member(
+					rs.getString("EMAIL"),
+					rs.getString("PASSWORD"),
+					rs.getString("NAME"),
+					rs.getTimestamp("REGDATE").toLocalDateTime());
+			member.setId(rs.getLong("ID"));
+			return member;
+		}
+	};
 	@Autowired
 	public MemberDao(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -30,37 +43,24 @@ public class MemberDao {
 	public Member selectByEmail(String email) {
 		List<Member> results = jdbcTemplate.query(
 				"select * from MEMBER where EMAIL = ?",
-				new RowMapper<Member>() {
-					@Override
-					public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Member member = new Member(
-								rs.getString("EMAIL"),
-								rs.getString("PASSWORD"),
-								rs.getString("NAME"),
-								rs.getTimestamp("REGDATE").toLocalDateTime());
-						member.setId(rs.getLong("ID"));
-						return member;
-					}
-				}, email);
+				memRowMapper, email);
 
 		return results.isEmpty() ? null : results.get(0);
 	}  
+	//아이디로 검색
+	public Member selectById(Long id) {
+		List<Member> results = jdbcTemplate.query(
+				"select * from MEMBER where ID = ?",
+				memRowMapper, id);
+
+		return results.isEmpty() ? null : results.get(0);
+	}
+	   
 	//사용자 정보 목록 가져오기
 	public List<Member> selectAll() {
 		List<Member> results = jdbcTemplate.query(
 				"select * from MEMBER",
-				new RowMapper<Member>() {
-					@Override
-					public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
-						Member member = new Member(
-								rs.getString("EMAIL"),
-								rs.getString("PASSWORD"),
-								rs.getString("NAME"),
-								rs.getTimestamp("REGDATE").toLocalDateTime());
-						member.setId(rs.getLong("ID"));
-						return member;
-					}
-				});
+				memRowMapper);
 		return results;
 	}  
 	
@@ -95,4 +95,12 @@ public class MemberDao {
 		Number keyValue = keyHolder.getKey();
 		member.setId(keyValue.longValue());
 	}
+	
+	 //등록일 기준
+	public List<Member> selectByRegDate(LocalDateTime from, LocalDateTime to) {
+		List<Member> results = jdbcTemplate.query(
+				"select * from MEMBER where REGDATE between ? and ? order by REGDATE desc",
+				memRowMapper,from,to);
+		return results;
+	}  
 }
